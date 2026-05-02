@@ -3,6 +3,7 @@ import telebot
 import os
 from dotenv import load_dotenv
 import PolzaRequests
+import random
 
 load_dotenv()
 
@@ -36,8 +37,10 @@ def send_gpt_response(message):
 
 @bot.message_handler(content_types=['text'])
 def echo_all(message):
-    pass
-    #bot.reply_to(message, message.text)
+    if random.randint(1, 100) <= 50:
+        history = [{"role":"system", "content":character_description}, {"role":"user", "content":message.text}]
+        resp = polza.SimpleGenerateText(history, "openai/gpt-4o-mini")
+        bot.reply_to(message, resp)
 
 if __name__ == "__main__":
     bot.polling()
