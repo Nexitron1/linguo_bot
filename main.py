@@ -12,7 +12,7 @@ if not BOT_TOKEN:
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-print("Bot started to work")
+print("Бот начал работу")
 
 @bot.message_handler(commands=['start'])
 def send_welkome(message):
