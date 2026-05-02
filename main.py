@@ -18,6 +18,7 @@ if not POLZA_API_KEY:
     raise ValueError("Error: there is no POLZA_API_KEY in .env")
 polza = PolzaRequests.PolzaAI(POLZA_API_KEY)
 
+character = open("character.txt")
 
 print("Бот начал работу")
 
@@ -27,7 +28,8 @@ def send_welkome(message):
 
 @bot.message_handler(commands=['гпт', 'gpt'])
 def send_gpt_response(message):
-    resp = polza.MegaSimpleGenerateText(message.text, "openai/gpt-5-nano")
+    history = [{"role":"system", "content":character}, {"role":"user", "content":message.text}]
+    resp = polza.SimpleGenerateText(history, "openai/gpt-5-nano")
     bot.reply_to(message, resp)
 
 @bot.message_handler(content_types=['text'])
