@@ -31,7 +31,7 @@ def send_welkome(message):
 @bot.message_handler(commands=['гпт', 'gpt'])
 def send_gpt_response(message):
     history = [{"role":"system", "content":character_description}, {"role":"user", "content":message.text}]
-    resp = polza.SimpleGenerateText(history, "openai/gpt-5-nano")
+    resp = polza.SimpleGenerateText(history, "openai/gpt-4o-mini")
     bot.reply_to(message, resp)
 
 @bot.message_handler(content_types=['text'])
