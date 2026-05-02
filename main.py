@@ -34,10 +34,29 @@ def send_gpt_response(message):
     resp = polza.SimpleGenerateText(history, "openai/gpt-4o-mini")
     bot.reply_to(message, resp)
 
+@bot.message_handler(commands=['донос', 'delation'])
+def send_delation(message):
+    history = [{"role":"system", "content":character_description}, {"role":"user", "content":message.text}]
+    resp = polza.SimpleGenerateText(history, "openai/gpt-4o-mini")
+    bot.send_message(message.chat.id, resp)
+
+def send_rusophobian_sticker(message):
+    bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAM9afWHoiUkI92BeJbV_JNBlr8ribgAAooRAAIdo8BKEVrJTo6y_vg7BA", reply_to_message_id=message.id)
+
+"""
+@bot.message_handler(content_types=['sticker'])
+def get_sticker_id(message):
+    sticker_file_id = message.sticker.file_id
+    print(f"File ID стикера: {sticker_file_id}")
+    # Сохраните этот ID для дальнейшего использования
+"""
+
 @bot.message_handler(content_types=['text'])
 def echo_all(message):
-    pass
-    #bot.reply_to(message, message.text)
+    resp = polza.MegaSimpleGenerateText("Если указанный далее текст содержит в себе признаки русофобии (отказ от использования только русских слов, оскорбления русской нации), то ответь только одним словом: ДА   если нет, то ответь НЕТ     вот текст для проверки: " + message.text, "openai/gpt-4o-mini")
+    if resp == "ДА":
+        send_rusophobian_sticker(message)
+    #bot.reply_to(message, resp)
 
 if __name__ == "__main__":
     bot.polling()
