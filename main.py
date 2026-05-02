@@ -26,9 +26,9 @@ def send_welkome(message):
     bot.reply_to(message, "Hi")
 
 @bot.message_handler(commands=['гпт', 'gpt'])
-def send_welkome(message):
-    
-    bot.reply_to(message, "Hi")
+def send_gpt_response(message):
+    resp = polza.MegaSimpleGenerateText(message.text, PolzaRequests.Models.GPT5_nano)
+    bot.reply_to(message, resp)
 
 @bot.message_handler(content_types=['text'])
 def echo_all(message):
