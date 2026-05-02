@@ -27,19 +27,26 @@ class PolzaAI():
             response = requests.post(url, json=payload, headers=headers)
         except ConnectionError as e:
             print(e)
-        if response.status_code != 201:
+        if response.status_code == 201 or response.status_code == 200:
+            return response.json()
+        else:
             print("Статус:", response.status_code)
             print("Тело ответа:", response.json())
             return None
-        else:
-            return response.json()
+            
 
     """Возвращает только текстовый ответ от модели по полной истории сообщений"""
-    def SimpleGenerateText(self, messages, model: Models):
+    def SimpleGenerateText(self, messages, model : str):
         response = self.GenerateText(messages, model)
-        return response['choices'][0]['message']['content']
+        if response:
+            return response['choices'][0]['message']['content']
+        else:
+            return "Что-то поломалось"
 
     """Возвращает только текстовый ответ модели на одно сообщение без контекста"""
-    def MegaSimpleGenerateText(self, userInput: str, model: Models):
+    def MegaSimpleGenerateText(self, userInput: str, model : str):
         response = self.SimpleGenerateText([{"role":"user", "content":userInput}], model)
-        return response
+        if response:
+            return response
+        else:
+            return "Что-то поломалось"

@@ -27,7 +27,7 @@ def send_welkome(message):
 
 @bot.message_handler(commands=['гпт', 'gpt'])
 def send_gpt_response(message):
-    resp = polza.MegaSimpleGenerateText(message.text, PolzaRequests.Models.GPT5_nano)
+    resp = polza.MegaSimpleGenerateText(message.text, "openai/gpt-5-nano")
     bot.reply_to(message, resp)
 
 @bot.message_handler(content_types=['text'])
