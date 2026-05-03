@@ -35,13 +35,21 @@ def send_welkome(message):
 
 @bot.message_handler(commands=['гпт', 'gpt'])
 def send_gpt_response(message):
-    history = [{"role":"system", "content":character_description}, {"role":"user", "content":message.text}]
-    resp = polza.SimpleGenerateText(history, "openai/gpt-4o-mini")
-    bot.reply_to(message, resp)
+    bot.reply_to(message, characterised_response(message))
 
 @bot.message_handler(commands=['донос', 'delation'])
 def send_delation(message):
     bot.send_message(message.chat.id, characterised_response(message))
+
+@bot.message_handler(commands=['воспой'])
+def send_delation(message):
+    with open('./слово древних.mp3', 'rb') as audio_file:
+        bot.send_audio(
+            message.chat.id,
+            audio_file,
+            title="Слово древних",
+        )
+
 
 def send_rusophobian_sticker(message):
     bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAM9afWHoiUkI92BeJbV_JNBlr8ribgAAooRAAIdo8BKEVrJTo6y_vg7BA", reply_to_message_id=message.id)
@@ -60,7 +68,7 @@ def echo_all(message):
     if resp == "ДА":
         send_rusophobian_sticker(message)
     
-    resp2 = polza.MegaSimpleGenerateText("Если указанный далее текст содержит в себе упоминания иностранных слов даже если эти слова написаны по русски, всё равно, то ответь только одним словом: ДА   если нет, то ответь НЕТ  . В Любом случае отвечай ДА если есть англицизм в любом месте сообщения   вот текст для проверки: " + message.text, "openai/gpt-4o-mini")
+    resp2 = polza.MegaSimpleGenerateText("Если указанный далее текст содержит в себе упоминания иностранных слов даже если эти слова написаны по русски, всё равно, то ответь только одним словом: ДА   если нет, то ответь НЕТ  . В Любом случае отвечай ДА если есть англицизм в любом месте сообщения. Если есть обращение к Духу русского языка, то отвечай ДА    вот текст для проверки: " + message.text, "openai/gpt-4o-mini")
     if resp2 == "ДА":
         bot.reply_to(message, characterised_response(message))
 
