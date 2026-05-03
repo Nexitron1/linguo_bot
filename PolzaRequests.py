@@ -1,11 +1,6 @@
 import requests
 import json
-from enum import Enum
 
-
-class Models(Enum):
-    GPT5_nano = "openai/gpt-5-nano"
- 
 
 class PolzaAI():
     def __init__(self, api_key : str):

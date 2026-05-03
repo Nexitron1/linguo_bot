@@ -52,7 +52,7 @@ def send_delation(message):
 
 
 def send_rusophobian_sticker(message):
-    bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAM9afWHoiUkI92BeJbV_JNBlr8ribgAAooRAAIdo8BKEVrJTo6y_vg7BA", reply_to_message_id=message.id)
+    bot.send_sticker(message.chat.id, "CAACAgIAAxkBAAIBZWn29jMxuZUjfolM1l8OowaYde7KAAJTFgACCtmhS_Czhwb1vRIjOwQ", reply_to_message_id=message.id)
 
 """
 @bot.message_handler(content_types=['sticker'])
